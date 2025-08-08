@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Productivity App</title>
+<style>
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background: #000;
+        color: #fff;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    h1, h2 { margin: 0; }
+
+    /* Sticky Nav */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        display: flex;
+        justify-content: center;
+        padding: 0.8rem;
+        z-index: 1000;
+    }
+    nav a {
+        color: #ccc;
+        margin: 0 1rem;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s;
+    }
+    nav a.active, nav a:hover {
+        color: #fff;
+    }
+
+    /* Hero Section */
+    header {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url('https://via.placeholder.com/1600x900') no-repeat center/cover;
+        position: relative;
+        text-align: center;
+        color: #fff;
+    }
+    header::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+    header h1 {
+        font-size: 3.5rem;
+        z-index: 2;
+        animation: fadeInUp 1s ease forwards;
+    }
+    header p {
+        font-size: 1.3rem;
+        color: #ccc;
+        max-width: 700px;
+        margin-top: 1rem;
+        z-index: 2;
+        animation: fadeInUp 1.5s ease forwards;
+    }
+
+    /* Sections */
+    section {
+        padding: 5rem 2rem;
+        max-width: 1100px;
+        margin: auto;
+    }
+    .feature {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 5rem;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+    }
+    .feature.show { opacity: 1; transform: translateY(0); }
+
+    .feature img {
+        flex: 1;
+        max-width: 450px;
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(255,255,255,0.1);
+    }
+    .feature-text {
+        flex: 1;
+        padding: 2rem;
+    }
+    .feature-text h2 {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+    }
+    .feature-text p {
+        color: #ccc;
+        font-size: 1.1rem;
+    }
+    .reverse { flex-direction: row-reverse; }
+
+    /* CTA */
+    .cta {
+        text-align: center;
+        padding: 6rem 2rem;
+        background: linear-gradient(180deg, #000, #111);
+    }
+    .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .cta button {
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50px;
+        background: #007aff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .cta button:hover { background: #005bb5; }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.9rem;
+        color: #888;
+        border-top: 1px solid #222;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp { from {opacity: 0; transform: translateY(40px);} to {opacity: 1; transform: translateY(0);} }
+    .slide-left { transform: translateX(-50px); }
+    .slide-right { transform: translateX(50px); }
+    .zoom { transform: scale(0.9); }
+    .slide-left.show, .slide-right.show, .zoom.show { transform: none; opacity: 1; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#categories">Categories</a>
+    <a href="#accessibility">Accessibility</a>
+    <a href="#settings">Settings</a>
+</nav>
+
+<header id="home">
+    <h1>NextGen Productivity</h1>
+    <p>Switch modes. Filter distractions. All your communication in one smart dashboard.</p>
+</header>
+
+<section id="dashboard">
+    <div class="feature slide-left">
+        <img src="first.jpg" alt="Dashboard">
+        <div class="feature-text">
+            <h2>One Dashboard. Total Control.</h2>
+            <p>Outlook, Gmail, GroupMe, Instagram — all streamlined into a single searchable timeline so you can focus on what matters most.</p>
+        </div>
+    </div>
+</section>
+
+<section id="categories">
+    <div class="feature reverse slide-right">
+        <img src="second.jpg" alt="Category Switching">
+        <div class="feature-text">
+            <h2>Seamless Category Switching</h2>
+            <p>Instantly move between Work, School, and Personal. Your notifications adapt automatically.</p>
+        </div>
+    </div>
+</section>
+
+<section id="accessibility">
+    <div class="feature zoom">
+        <img src="third.jpg" alt="Accessibility">
+        <div class="feature-text">
+            <h2>Accessibility First</h2>
+            <p>Screen reader compatibility, high-contrast mode, and voice commands ensure everyone can use NextGen effortlessly.</p>
+        </div>
+    </div>
+</section>
+
+<section id="settings">
+    <div class="feature reverse slide-left">
+        <img src="fourth.jpg" alt="Settings">
+        <div class="feature-text">
+            <h2>Smart Settings</h2>
+            <p>Lock access by time, customize platforms, and fine-tune contact lists — control your workflow like never before.</p>
+        </div>
+    </div>
+</section>
+
+<div class="cta">
+    <h2>Experience Productivity Reimagined</h2>
+    <button>Get the App</button>
+</div>
+
+<footer>
+    &copy; 2025 NextGen Productivity. All rights reserved.
+</footer>
+
+<script>
+    // Section reveal on scroll
+    const features = document.querySelectorAll('.feature');
+    const navLinks = document.querySelectorAll('nav a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        features.forEach(feature => {
+            const rect = feature.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) {
+                feature.classList.add('show');
+            }
+        });
+
+        // Highlight nav based on section
+        document.querySelectorAll('section, header').forEach(sec => {
+            const top = window.scrollY;
+            const offset = sec.offsetTop - 150;
+            const height = sec.offsetHeight;
+            if (top >= offset && top < offset + height) {
+                current = sec.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
