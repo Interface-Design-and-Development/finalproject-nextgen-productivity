@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NextGen Productivity App</title>
+<style>
+  /* Reset & Base */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+  h1, h2 { margin: 0; }
+
+  /* Starry Background Container */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow:
+      0 0 5px 1px white,
+      0 0 10px 2px white;
+    animation: twinkle 3s infinite ease-in-out alternate;
+  }
+  /* Create varying star sizes and animations */
+  .star:nth-child(1) { width: 2px; height: 2px; top: 10%; left: 15%; animation-delay: 0s;}
+  .star:nth-child(2) { width: 3px; height: 3px; top: 25%; left: 40%; animation-delay: 1.2s;}
+  .star:nth-child(3) { width: 1.5px; height: 1.5px; top: 45%; left: 60%; animation-delay: 2.1s;}
+  .star:nth-child(4) { width: 2.5px; height: 2.5px; top: 60%; left: 80%; animation-delay: 0.7s;}
+  .star:nth-child(5) { width: 1.8px; height: 1.8px; top: 80%; left: 30%; animation-delay: 1.5s;}
+  .star:nth-child(6) { width: 2.2px; height: 2.2px; top: 85%; left: 70%; animation-delay: 2.7s;}
+  /* More stars for richness */
+  .star:nth-child(7) { width: 1.3px; height: 1.3px; top: 20%; left: 70%; animation-delay: 1.1s;}
+  .star:nth-child(8) { width: 2.7px; height: 2.7px; top: 35%; left: 10%; animation-delay: 2.4s;}
+  .star:nth-child(9) { width: 1.6px; height: 1.6px; top: 50%; left: 50%; animation-delay: 0.9s;}
+  .star:nth-child(10) { width: 2.0px; height: 2.0px; top: 70%; left: 20%; animation-delay: 1.8s;}
+  
+  /* Twinkle animation */
+  @keyframes twinkle {
+    0% { opacity: 0.2; transform: scale(0.8) translateY(0); }
+    50% { opacity: 1; transform: scale(1.2) translateY(-3px); }
+    100% { opacity: 0.2; transform: scale(0.8) translateY(0); }
+  }
+
+  /* Sticky Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    padding: 0.8rem;
+    z-index: 1000;
+  }
+  nav a {
+    color: #ccc;
+    margin: 0 1rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  nav a.active, nav a:hover {
+    color: #fff;
+  }
+
+  /* Hero Section */
+  header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url('https://via.placeholder.com/1600x900') no-repeat center/cover;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    z-index: 10;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+  header h1 {
+    font-size: 3.5rem;
+    z-index: 10;
+    animation: fadeInUp 1s ease forwards;
+  }
+  header p {
+    font-size: 1.3rem;
+    color: #ccc;
+    max-width: 700px;
+    margin-top: 1rem;
+    z-index: 10;
+    animation: fadeInUp 1.5s ease forwards;
+  }
+
+  /* Sections */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: auto;
+    position: relative;
+    z-index: 10;
+  }
+  .feature {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 5rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+  .feature.show { opacity: 1; transform: translateY(0); }
+
+  .feature img {
+    flex: 1;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.1);
+  }
+  .feature-text {
+    flex: 1;
+    padding: 2rem;
+  }
+  .feature-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .feature-text p {
+    color: #ccc;
+    font-size: 1.1rem;
+  }
+  .reverse { flex-direction: row-reverse; }
+
+  /* CTA */
+  .cta {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(180deg, #000, #111);
+    position: relative;
+    z-index: 10;
+  }
+  .cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .cta button {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    background: #007aff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .cta button:hover { background: #005bb5; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    color: #888;
+    border-top: 1px solid #222;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp { from {opacity: 0; transform: translateY(40px);} to {opacity: 1; transform: translateY(0);} }
+  .slide-left { transform: translateX(-50px); }
+  .slide-right { transform: translateX(50px); }
+  .zoom { transform: scale(0.9); }
+  .slide-left.show, .slide-right.show, .zoom.show { transform: none; opacity: 1; }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+  <!-- Starry background -->
+  <div class="stars">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+
+  <nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#categories">Categories</a>
+    <a href="#accessibility">Accessibility</a>
+    <a href="#settings">Settings</a>
+  </nav>
+
+  <header id="home">
+    <h1>NextGen Productivity</h1>
+    <p>Switch modes. Filter distractions. All your communication in one smart dashboard.</p>
+  </header>
+
+  <section id="dashboard">
+    <div class="feature slide-left">
+      <img src="first.jpg" alt="Dashboard" />
+      <div class="feature-text">
+        <h2>One Dashboard. Total Control.</h2>
+        <p>Outlook, Gmail, GroupMe, Instagram — all streamlined into a single searchable timeline so you can focus on what matters most.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="feature reverse slide-right">
+      <img src="second.jpg" alt="Category Switching" />
+      <div class="feature-text">
+        <h2>Seamless Category Switching</h2>
+        <p>Instantly move between Work, School, and Personal. Your notifications adapt automatically.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="accessibility">
+    <div class="feature zoom">
+      <img src="third.jpg" alt="Accessibility" />
+      <div class="feature-text">
+        <h2>Accessibility First</h2>
+        <p>Screen reader compatibility, high-contrast mode, and voice commands ensure everyone can use NextGen effortlessly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="settings">
+    <div class="feature reverse slide-left">
+      <img src="fourth.jpg" alt="Settings" />
+      <div class="feature-text">
+        <h2>Smart Settings</h2>
+        <p>Lock access by time, customize platforms, and fine-tune contact lists — control your workflow like never before.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <h2>Experience Productivity Reimagined</h2>
+    <button>Get the App</button>
+  </div>
+
+  <footer>
+    &copy; 2025 NextGen Productivity. All rights reserved.
+  </footer>
+
+<script>
+  // Section reveal on scroll
+  const features = document.querySelectorAll('.feature');
+  const navLinks = document.querySelectorAll('nav a');
+
+  window.addEventListener('scroll', () => {
+    features.forEach(feature => {
+      const rect = feature.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        feature.classList.add('show');
+      }
+    });
+
+    // Highlight nav based on section
+    let current = '';
+    document.querySelectorAll('section, header').forEach(sec => {
+      const top = window.scrollY;
+      const offset = sec.offsetTop - 150;
+      const height = sec.offsetHeight;
+      if (top >= offset && top < offset + height) {
+        current = sec.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
